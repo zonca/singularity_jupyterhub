@@ -1,4 +1,4 @@
-from quay.io/singularity/singularity:v3.11.0
+from quay.io/singularity/singularity:v4.1.0
 
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
@@ -21,6 +21,9 @@ RUN mkdir -p "/home"
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su
 RUN adduser -s /bin/bash -D -h "${HOME}" -u "${NB_UID}" "${NB_USER}"
 COPY jupyterhub_singleuser.sif /home/jovyan/jupyterhub_singleuser.sif
+
+RUN apk add --no-cache fuse
+
 RUN chmod g+w /etc/passwd && \
     fix-permissions "${HOME}"
 
